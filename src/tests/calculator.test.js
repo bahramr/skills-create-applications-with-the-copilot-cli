@@ -122,10 +122,46 @@ describe("calculate (operation dispatcher)", () => {
   });
 
   test("throws for an unsupported operation", () => {
-    expect(() => calculate(1, 2, "%")).toThrow(/Unsupported operation/);
+    expect(() => calculate(1, 2, "unsupported")).toThrow(/Unsupported operation/);
   });
 
   test("propagates division by zero error through calculate()", () => {
     expect(() => calculate(5, 0, "/")).toThrow("Division by zero is not allowed.");
+  });
+});
+
+describe("modulo", () => {
+  test("10 % 3 = 1", () => {
+    expect(calculate(10, 3, "%")).toBe(1);
+    expect(calculate(10, 3, "mod")).toBe(1);
+    expect(calculate(10, 3, "modulo")).toBe(1);
+  });
+
+  test("throws an error when modulo by zero", () => {
+    expect(() => calculate(5, 0, "%")).toThrow("Modulo by zero is not allowed.");
+  });
+});
+
+describe("exponentiate", () => {
+  test("2 ^ 10 = 1024", () => {
+    expect(calculate(2, 10, "^")).toBe(1024);
+    expect(calculate(2, 10, "pow")).toBe(1024);
+    expect(calculate(2, 10, "exponentiate")).toBe(1024);
+  });
+
+  test("handles negative exponents", () => {
+    expect(calculate(2, -1, "^")).toBe(0.5);
+  });
+});
+
+describe("sqrt", () => {
+  test("sqrt(9) = 3", () => {
+    expect(calculate(9, 0, "sqrt")).toBe(3);
+  });
+
+  test("throws an error for negative operands", () => {
+    expect(() => calculate(-4, 0, "sqrt")).toThrow(
+      "Cannot compute the square root of a negative number."
+    );
   });
 });
