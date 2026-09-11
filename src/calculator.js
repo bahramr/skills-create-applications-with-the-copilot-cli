@@ -189,6 +189,10 @@ if (require.main === module) {
   main(process.argv);
 }
 
+// Aliases matching common naming conventions (power/squareRoot).
+const power = exponentiate;
+const squareRoot = sqrt;
+
 module.exports = {
   add,
   subtract,
@@ -196,6 +200,8 @@ module.exports = {
   divide,
   modulo,
   exponentiate,
+  power,
   sqrt,
+  squareRoot,
   calculate,
 };
